@@ -137,7 +137,7 @@ function Index() {
         </div>
         {/* Wider than the copy above: Tally collapses its two-column rows when the form is narrow. */}
         <div className="mx-auto mt-10 max-w-4xl px-6 text-left">
-          <TallyForm formId="2jjQ5g" title="Book a Diagnostic Session" />
+          <TallyForm formId="yXXWpW" title="Book a Diagnostic Session" />
         </div>
       </section>
       <footer className="py-8 text-center text-sm text-muted-foreground">© 2026 Uplyft Business</footer>
