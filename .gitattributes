@@ -1,0 +1,6 @@
+# Store text files with LF endings so Windows checkouts match Prettier and the Linux build.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
