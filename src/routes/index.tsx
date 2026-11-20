@@ -148,13 +148,29 @@ function SectionHeading({ label, title }: { label: string; title: string }) {
 function Index() {
   return (
     <SitePage>
-      <section id="top" className="bg-cream">
-        <div className="mx-auto flex max-w-[1200px] flex-col gap-7 px-6 pb-16 pt-16 md:px-8 md:pb-[88px] md:pt-24">
-          <p className={eyebrow}>For growth-stage B2B tech companies across APJ</p>
-          <h1 className="max-w-[900px] text-[40px] font-bold leading-[1.05] text-ink sm:text-5xl md:text-[64px]">
-            We fix growth problems at the root.
+      {/* Dark banner with a soft orange-to-gold glow, matching the logo's colours. */}
+      <section id="top" className="relative overflow-hidden bg-ink">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-40 -top-56 size-[620px] rounded-full opacity-50 blur-[80px]"
+          style={{ background: "radial-gradient(circle, var(--brand), transparent 65%)" }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-64 -left-48 size-[520px] rounded-full opacity-25 blur-[80px]"
+          style={{ background: "radial-gradient(circle, var(--sun), transparent 65%)" }}
+        />
+        <div className="relative mx-auto flex max-w-[1200px] flex-col gap-7 px-6 pb-16 pt-16 md:px-8 md:pb-[88px] md:pt-24">
+          <p className="text-sm font-medium uppercase tracking-[0.16em] text-sun">
+            For growth-stage B2B tech companies across APJ
+          </p>
+          <h1 className="max-w-[900px] text-[40px] font-bold leading-[1.05] text-white sm:text-5xl md:text-[64px]">
+            We fix growth problems{" "}
+            <span className="bg-gradient-to-r from-brand to-sun bg-clip-text text-transparent">
+              at the root.
+            </span>
           </h1>
-          <p className="max-w-[760px] text-xl font-light leading-normal md:text-2xl">
+          <p className="max-w-[760px] text-xl font-light leading-normal text-ink-soft md:text-2xl">
             Four senior operators and one integrated system for strategy, revenue, talent and
             execution. Plus coaching for the leaders who have to carry the change.
           </p>
@@ -162,16 +178,16 @@ function Index() {
             <DiagnosticButton className="px-7 py-4 text-lg md:text-xl" />
             <a
               href="#how"
-              className="border-b-2 border-ink px-2 py-4 text-lg font-medium text-ink transition hover:border-brand hover:text-brand"
+              className="border-b-2 border-white px-2 py-4 text-lg font-medium text-white transition hover:border-sun hover:text-sun"
             >
               See how we work
             </a>
           </div>
-          <div className="mt-4 flex flex-wrap gap-x-10 gap-y-6 border-t border-border pt-6">
+          <div className="mt-4 flex flex-wrap gap-x-10 gap-y-6 border-t border-ink-line pt-6">
             {stats.map((s) => (
               <div key={s.l}>
-                <p className="text-3xl font-bold text-ink md:text-4xl">{s.v}</p>
-                <p className="mt-1 text-muted-foreground">{s.l}</p>
+                <p className="text-3xl font-bold text-white md:text-4xl">{s.v}</p>
+                <p className="mt-1 text-ink-muted">{s.l}</p>
               </div>
             ))}
           </div>
