@@ -40,7 +40,9 @@ function HowWeWork() {
               <div className="price-cards">
                 <div className="price">
                   <span className="tag">Targeted Sprint</span>
-                  <div className="amt">$50K–$120K</div>
+                  <div className="amt">
+                    <small>From</small> $9K
+                  </div>
                   <p className="muted">
                     <b>Specialist Lead.</b> One lead drives the work; the other three review
                     strategy at key milestones to catch blind spots.
@@ -53,8 +55,11 @@ function HowWeWork() {
                 <div className="price feature">
                   <span className="ribbon">MOST IMPACT</span>
                   <span className="tag">Full Council</span>
-                  <div className="amt grad-text">$150K–$350K</div>
-                  <p>Multiple specialists deploy a full engine redesign.</p>
+                  <div className="amt grad-text">Scoped after discovery</div>
+                  <p>
+                    Multiple specialists deploy a full engine redesign. We quote it once the
+                    discovery call shows us the size of the problem.
+                  </p>
                   <div className="meta">
                     <span>90–180 days</span>
                     <span>Stalled growth · Post-merger</span>

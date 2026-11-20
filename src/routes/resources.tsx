@@ -1,14 +1,130 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, SiteLayout } from "@/components/site/SiteLayout";
-import { WORKSHEET_PDF, YOUTUBE_URL } from "@/components/site/config";
+import { publicFile, YOUTUBE_URL } from "@/components/site/config";
 import { ArrowRight, Download } from "@/components/site/icons";
 
 export const Route = createFileRoute("/resources")({
   component: Resources,
 });
 
-// To add a worksheet: put the PDF in public/resources/ and copy the .feature-res block below.
+type Category = "checklist" | "framework";
+
+type Resource = {
+  category: Category;
+  title: string;
+  blurb: string;
+  episode: string; // which Move by Move episode it comes from
+  minutes: number;
+  pdf: string; // file name in public/resources/
+  points: string[]; // shown as a numbered list on the card
+};
+
+// To add a resource: put the PDF in public/resources/ and add an entry here.
+const resources: Resource[] = [
+  {
+    category: "framework",
+    title: "Easy to check. Easy to share.",
+    blurb:
+      "Turn one question your buyers ask into a public answer they can check for themselves and forward to a colleague.",
+    episode: "Zerodha",
+    minutes: 30,
+    pdf: "move-by-move-easy-to-check-easy-to-share.pdf",
+    points: [
+      "Pick the question",
+      "Build the public answer",
+      "The five-customer share test",
+      "Size it to you and your markets",
+      "Keep the promise after the sale",
+    ],
+  },
+];
+
+const groups: { id: Category; label: string; plural: string; intro: string }[] = [
+  {
+    id: "checklist",
+    label: "Checklist",
+    plural: "Checklists",
+    intro: "Quick yes/no checks you can run in a meeting to spot what’s missing.",
+  },
+  {
+    id: "framework",
+    label: "Framework",
+    plural: "Frameworks",
+    intro: "Step-by-step methods for working through a problem with your team.",
+  },
+];
+
+function ResourceCard({ r }: { r: Resource }) {
+  const group = groups.find((g) => g.id === r.category)!;
+  const href = publicFile(`resources/${r.pdf}`);
+  return (
+    <article className="rcard rv">
+      <a className="cover" href={href} target="_blank" rel="noopener noreferrer" tabIndex={-1}>
+        <div className="cover-top">
+          <b>MOVE BY MOVE</b>
+          <span>{group.label.toUpperCase()}</span>
+        </div>
+        <div className="cover-title">{r.title}</div>
+        <div className="cover-lines">
+          <i />
+          <i />
+          <i />
+        </div>
+      </a>
+      <div className="body">
+        <div className="meta-row">
+          <span className={`tag tag-${r.category}`}>{group.label}</span>
+          <span className="muted small">
+            {r.episode} episode · about {r.minutes} min
+          </span>
+        </div>
+        <h3>{r.title}</h3>
+        <p className="muted">{r.blurb}</p>
+        <ol className="fr-steps">
+          {r.points.map((p) => (
+            <li key={p}>{p}</li>
+          ))}
+        </ol>
+        <div className="ctas" style={{ marginTop: 24 }}>
+          <a className="btn btn-primary" href={href} target="_blank" rel="noopener noreferrer">
+            <Download />
+            Get the free PDF
+          </a>
+          <a className="btn btn-yt" href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
+            Watch the episode
+          </a>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ComingSoon({ plural }: { plural: string }) {
+  return (
+    <a
+      className="card res res-empty rv"
+      href={YOUTUBE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span className="tag">Coming soon</span>
+      <h3>New {plural.toLowerCase()} on the way</h3>
+      <p className="muted">
+        A new free resource drops with each Move by Move episode. Subscribe so you get the next one
+        first.
+      </p>
+      <span className="go">
+        Subscribe on YouTube <ArrowRight />
+      </span>
+    </a>
+  );
+}
+
 function Resources() {
+  const [filter, setFilter] = useState<"all" | Category>("all");
+  const shown = groups.filter((g) => filter === "all" || g.id === filter);
+
   return (
     <SiteLayout>
       <PageHero
@@ -19,123 +135,49 @@ function Resources() {
           </>
         }
       >
-        Free worksheets you can use with your team this week. Each one comes from an episode of Move
-        by Move.
+        Free checklists and frameworks you can use with your team this week. Each one comes from an
+        episode of Move by Move.
       </PageHero>
 
       <section>
         <div className="wrap">
-          <div className="feature-res rv">
-            <div>
-              <span className="tag">Free worksheet · About 30 minutes</span>
-              <h2>
-                Easy to <span className="grad-text">check</span>. Easy to{" "}
-                <span className="grad-text">share</span>.
-              </h2>
-              <p className="muted" style={{ fontSize: "1.08rem" }}>
-                Turn one question your buyers ask into a public answer they can check for themselves
-                and forward to a colleague. From the <b>Zerodha</b> episode of Move by Move.
-              </p>
-              <ol className="fr-steps">
-                <li>Pick the question</li>
-                <li>Build the public answer</li>
-                <li>The five-customer share test</li>
-                <li>Size it to you and your markets</li>
-                <li>Keep the promise after the sale</li>
-              </ol>
-              <div className="ctas" style={{ marginTop: 28 }}>
-                <a
-                  className="btn btn-primary"
-                  href={WORKSHEET_PDF}
-                  target="_blank"
-                  rel="noopener noreferrer"
+          <div className="filters" role="tablist" aria-label="Resource type">
+            {[{ id: "all" as const, plural: "All" }, ...groups].map((g) => {
+              const count =
+                g.id === "all"
+                  ? resources.length
+                  : resources.filter((r) => r.category === g.id).length;
+              return (
+                <button
+                  key={g.id}
+                  role="tab"
+                  aria-selected={filter === g.id}
+                  className={`chip${filter === g.id ? " on" : ""}`}
+                  onClick={() => setFilter(g.id)}
                 >
-                  <Download />
-                  Get the free PDF
-                </a>
-                <a
-                  className="btn btn-yt"
-                  href={YOUTUBE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Watch the episode
-                </a>
-              </div>
-            </div>
-            <a
-              className="fr-sheet"
-              href={WORKSHEET_PDF}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open the Easy to check, Easy to share worksheet (PDF)"
-            >
-              <div className="sh-top">
-                <b>MOVE BY MOVE</b>
-                <span>FREE WORKSHEET</span>
-              </div>
-              <div className="sh-body">
-                <div className="sh-h">
-                  Easy to <i>check</i>. Easy to <i>share</i>.
-                </div>
-                <div className="sh-quote">
-                  “What will this cost me?” · “What happens if I tell a friend?”
-                </div>
-                <div className="sh-row">
-                  <span>1</span>
-                  <div />
-                </div>
-                <div className="sh-row">
-                  <span>2</span>
-                  <div />
-                </div>
-                <div className="sh-grid">
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                </div>
-                <div className="sh-row">
-                  <span>3</span>
-                  <div />
-                </div>
-                <div className="sh-row">
-                  <span>5</span>
-                  <div />
-                </div>
-              </div>
-              <div className="sh-foot">
-                what will this cost me, and why would I tell somebody else?
-              </div>
-            </a>
+                  {g.plural} <span className="count">{count}</span>
+                </button>
+              );
+            })}
           </div>
 
-          <div className="cards c2" style={{ marginTop: 22 }}>
-            <Link to="/move-by-move" className="card res rv">
-              <span className="tag yt">Video · Series</span>
-              <h3>Watch Move by Move</h3>
-              <p className="muted">
-                How companies won their market, one move at a time. Every episode comes with a free
-                worksheet.
-              </p>
-              <span className="go">
-                Watch now <ArrowRight />
-              </span>
-            </Link>
-            <a className="card res rv" href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
-              <span className="tag">Coming soon</span>
-              <h3>More worksheets on the way</h3>
-              <p className="muted">
-                A new free template drops with each episode. Subscribe so you get the next one
-                first.
-              </p>
-              <span className="go">
-                Subscribe on YouTube <ArrowRight />
-              </span>
-            </a>
-          </div>
+          {shown.map((g) => {
+            const items = resources.filter((r) => r.category === g.id);
+            return (
+              <div className="res-group" key={g.id}>
+                <div className="res-group-head">
+                  <h2>{g.plural}</h2>
+                  <p className="muted">{g.intro}</p>
+                </div>
+                <div className="res-grid">
+                  {items.map((r) => (
+                    <ResourceCard key={r.pdf} r={r} />
+                  ))}
+                  <ComingSoon plural={g.plural} />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
     </SiteLayout>
