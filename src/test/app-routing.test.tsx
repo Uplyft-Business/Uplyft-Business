@@ -15,17 +15,11 @@ describe("App routing", () => {
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
 
-  it.each([
-    "/how-we-work",
-    "/operators",
-    "/client-journeys",
-    "/resources",
-    "/move-by-move",
-    "/book",
-    "/privacy",
-  ])("matches a page for the %s tab", (path) => {
+  it("matches the resources page", () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
 
-    expect(router.matchRoutes(path).at(-1)?.routeId).toBe(path);
+    const matches = router.matchRoutes("/resources");
+
+    expect(matches.at(-1)?.routeId).toBe("/resources");
   });
 });

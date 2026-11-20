@@ -33,3 +33,6 @@ bun.lockb
 Thumbs.db
 *.suo
 *.sw?
+
+# Design mockups and exports (reference only, not part of the site)
+New_Design/

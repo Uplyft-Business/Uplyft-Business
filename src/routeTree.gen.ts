@@ -10,47 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as BookRouteImport } from './routes/book'
-import { Route as ClientJourneysRouteImport } from './routes/client-journeys'
-import { Route as HowWeWorkRouteImport } from './routes/how-we-work'
-import { Route as MoveByMoveRouteImport } from './routes/move-by-move'
-import { Route as OperatorsRouteImport } from './routes/operators'
-import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResourcesRouteImport } from './routes/resources'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookRoute = BookRouteImport.update({
-  id: '/book',
-  path: '/book',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClientJourneysRoute = ClientJourneysRouteImport.update({
-  id: '/client-journeys',
-  path: '/client-journeys',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HowWeWorkRoute = HowWeWorkRouteImport.update({
-  id: '/how-we-work',
-  path: '/how-we-work',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MoveByMoveRoute = MoveByMoveRouteImport.update({
-  id: '/move-by-move',
-  path: '/move-by-move',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OperatorsRoute = OperatorsRouteImport.update({
-  id: '/operators',
-  path: '/operators',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResourcesRoute = ResourcesRouteImport.update({
@@ -61,76 +25,27 @@ const ResourcesRoute = ResourcesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/book': typeof BookRoute
-  '/client-journeys': typeof ClientJourneysRoute
-  '/how-we-work': typeof HowWeWorkRoute
-  '/move-by-move': typeof MoveByMoveRoute
-  '/operators': typeof OperatorsRoute
-  '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/book': typeof BookRoute
-  '/client-journeys': typeof ClientJourneysRoute
-  '/how-we-work': typeof HowWeWorkRoute
-  '/move-by-move': typeof MoveByMoveRoute
-  '/operators': typeof OperatorsRoute
-  '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/book': typeof BookRoute
-  '/client-journeys': typeof ClientJourneysRoute
-  '/how-we-work': typeof HowWeWorkRoute
-  '/move-by-move': typeof MoveByMoveRoute
-  '/operators': typeof OperatorsRoute
-  '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/book'
-    | '/client-journeys'
-    | '/how-we-work'
-    | '/move-by-move'
-    | '/operators'
-    | '/privacy'
-    | '/resources'
+  fullPaths: '/' | '/resources'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/book'
-    | '/client-journeys'
-    | '/how-we-work'
-    | '/move-by-move'
-    | '/operators'
-    | '/privacy'
-    | '/resources'
-  id:
-    | '__root__'
-    | '/'
-    | '/book'
-    | '/client-journeys'
-    | '/how-we-work'
-    | '/move-by-move'
-    | '/operators'
-    | '/privacy'
-    | '/resources'
+  to: '/' | '/resources'
+  id: '__root__' | '/' | '/resources'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BookRoute: typeof BookRoute
-  ClientJourneysRoute: typeof ClientJourneysRoute
-  HowWeWorkRoute: typeof HowWeWorkRoute
-  MoveByMoveRoute: typeof MoveByMoveRoute
-  OperatorsRoute: typeof OperatorsRoute
-  PrivacyRoute: typeof PrivacyRoute
   ResourcesRoute: typeof ResourcesRoute
 }
 
@@ -141,48 +56,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/book': {
-      id: '/book'
-      path: '/book'
-      fullPath: '/book'
-      preLoaderRoute: typeof BookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/client-journeys': {
-      id: '/client-journeys'
-      path: '/client-journeys'
-      fullPath: '/client-journeys'
-      preLoaderRoute: typeof ClientJourneysRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/how-we-work': {
-      id: '/how-we-work'
-      path: '/how-we-work'
-      fullPath: '/how-we-work'
-      preLoaderRoute: typeof HowWeWorkRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/move-by-move': {
-      id: '/move-by-move'
-      path: '/move-by-move'
-      fullPath: '/move-by-move'
-      preLoaderRoute: typeof MoveByMoveRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/operators': {
-      id: '/operators'
-      path: '/operators'
-      fullPath: '/operators'
-      preLoaderRoute: typeof OperatorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resources': {
@@ -197,12 +70,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BookRoute: BookRoute,
-  ClientJourneysRoute: ClientJourneysRoute,
-  HowWeWorkRoute: HowWeWorkRoute,
-  MoveByMoveRoute: MoveByMoveRoute,
-  OperatorsRoute: OperatorsRoute,
-  PrivacyRoute: PrivacyRoute,
   ResourcesRoute: ResourcesRoute,
 }
 export const routeTree = rootRouteImport

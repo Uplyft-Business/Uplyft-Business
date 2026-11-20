@@ -1,190 +1,138 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { CtaBand, PageHero, SiteLayout } from "@/components/site/SiteLayout";
-import { publicFile, YOUTUBE_URL } from "@/components/site/config";
-import { ArrowRight, Download } from "@/components/site/icons";
+import { Download, ExternalLink, FileText, Play } from "lucide-react";
+import { SitePage } from "@/components/SiteLayout";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { resourceFileUrl, resources, type Resource } from "@/lib/resources";
 
 export const Route = createFileRoute("/resources")({
   component: Resources,
 });
 
-type Category = "checklist" | "framework";
+type PdfResource = Extract<Resource, { kind: "pdf" }>;
 
-type Resource = {
-  category: Category;
-  title: string;
-  blurb: string;
-  episode: string; // which Move by Move episode it comes from
-  minutes: number;
-  pdf: string; // file name in public/downloads/
-  points: string[]; // shown as a numbered list on the card
-};
+const kinds = {
+  video: { label: "Video", icon: Play, action: "Watch on YouTube" },
+  pdf: { label: "PDF", icon: FileText, action: "View" },
+  template: { label: "Template", icon: Download, action: "Download" },
+} as const;
 
-// To add a resource: put the PDF in public/downloads/ and add an entry here.
-const resources: Resource[] = [
-  {
-    category: "framework",
-    title: "Easy to check. Easy to share.",
-    blurb:
-      "Turn one question your buyers ask into a public answer they can check for themselves and forward to a colleague.",
-    episode: "Zerodha",
-    minutes: 30,
-    pdf: "move-by-move-easy-to-check-easy-to-share.pdf",
-    points: [
-      "Pick the question",
-      "Build the public answer",
-      "The five-customer share test",
-      "Size it to you and your markets",
-      "Keep the promise after the sale",
-    ],
-  },
-];
+const cardClass =
+  "group flex h-full w-full flex-col gap-3 rounded-lg border border-border bg-card p-7 text-left transition hover:border-brand";
 
-const groups: { id: Category; label: string; plural: string; intro: string }[] = [
-  {
-    id: "checklist",
-    label: "Checklist",
-    plural: "Checklists",
-    intro: "Quick yes/no checks you can run in a meeting to spot what’s missing.",
-  },
-  {
-    id: "framework",
-    label: "Framework",
-    plural: "Frameworks",
-    intro: "Step-by-step methods for working through a problem with your team.",
-  },
-];
+function CardBody({ resource }: { resource: Resource }) {
+  const { label, icon: Icon, action } = kinds[resource.kind];
 
-function ResourceCard({ r }: { r: Resource }) {
-  const group = groups.find((g) => g.id === r.category)!;
-  const href = publicFile(`downloads/${r.pdf}`);
   return (
-    <article className="rcard rv">
-      <a className="cover" href={href} target="_blank" rel="noopener noreferrer" tabIndex={-1}>
-        <div className="cover-top">
-          <b>MOVE BY MOVE</b>
-          <span>{group.label.toUpperCase()}</span>
-        </div>
-        <div className="cover-title">{r.title}</div>
-        <div className="cover-lines">
-          <i />
-          <i />
-          <i />
-        </div>
-      </a>
-      <div className="body">
-        <div className="meta-row">
-          <span className={`tag tag-${r.category}`}>{group.label}</span>
-          <span className="muted small">
-            {r.episode} episode · about {r.minutes} min
-          </span>
-        </div>
-        <h3>{r.title}</h3>
-        <p className="muted">{r.blurb}</p>
-        <ol className="fr-steps">
-          {r.points.map((p) => (
-            <li key={p}>{p}</li>
-          ))}
-        </ol>
-        <div className="ctas" style={{ marginTop: 24 }}>
-          <a className="btn btn-primary" href={href} target="_blank" rel="noopener noreferrer">
-            <Download />
-            Get the free PDF
-          </a>
-          <a className="btn btn-yt" href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
-            Watch the episode
-          </a>
-        </div>
-      </div>
-    </article>
+    <>
+      <p className="flex items-center gap-2 text-[15px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+        <Icon aria-hidden="true" className="size-4 text-brand" />
+        {label}
+      </p>
+      <h2 className="text-[22px] font-medium text-ink">{resource.title}</h2>
+      <p className="flex-1 leading-[1.6]">{resource.description}</p>
+      <p className="flex items-center gap-1.5 font-bold text-ink group-hover:text-brand">
+        {action}
+        {resource.kind === "video" && <ExternalLink aria-hidden="true" className="size-4" />}
+      </p>
+    </>
   );
 }
 
-function ComingSoon({ plural }: { plural: string }) {
+function ResourceCard({
+  resource,
+  onView,
+}: {
+  resource: Resource;
+  onView: (r: PdfResource) => void;
+}) {
+  switch (resource.kind) {
+    case "video":
+      return (
+        <a href={resource.url} target="_blank" rel="noopener noreferrer" className={cardClass}>
+          <CardBody resource={resource} />
+        </a>
+      );
+    case "pdf":
+      return (
+        <button type="button" className={cardClass} onClick={() => onView(resource)}>
+          <CardBody resource={resource} />
+        </button>
+      );
+    case "template":
+      return (
+        <a href={resourceFileUrl(resource.file)} download className={cardClass}>
+          <CardBody resource={resource} />
+        </a>
+      );
+  }
+}
+
+// Phone browsers often can't show a PDF inside a page, so the viewer always offers a new tab too.
+function PdfViewer({ pdf, onClose }: { pdf: PdfResource | null; onClose: () => void }) {
+  const newTabLink = useRef<HTMLAnchorElement>(null);
+
   return (
-    <a
-      className="card res res-empty rv"
-      href={YOUTUBE_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <span className="tag">Coming soon</span>
-      <h3>New {plural.toLowerCase()} on the way</h3>
-      <p className="muted">
-        A new free resource drops with each Move by Move episode. Subscribe so you get the next one
-        first.
-      </p>
-      <span className="go">
-        Subscribe on YouTube <ArrowRight />
-      </span>
-    </a>
+    <Dialog open={pdf !== null} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="flex h-[90vh] max-w-5xl flex-col gap-0 overflow-hidden p-0">
+        {pdf && (
+          <>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-b border-border py-4 pl-6 pr-12">
+              <DialogTitle className="text-lg font-medium text-ink">{pdf.title}</DialogTitle>
+              <DialogDescription className="sr-only">{pdf.description}</DialogDescription>
+              <a
+                ref={newTabLink}
+                href={resourceFileUrl(pdf.file)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-auto flex items-center gap-1.5 text-sm font-medium text-ink underline hover:text-brand"
+              >
+                Open in new tab <ExternalLink aria-hidden="true" className="size-4" />
+              </a>
+            </div>
+            <iframe
+              src={resourceFileUrl(pdf.file)}
+              title={pdf.title}
+              className="w-full flex-1 border-0"
+              // The browser's PDF viewer takes focus when it loads, which stops Escape closing
+              // the dialog; hand focus back to the dialog.
+              onLoad={() => newTabLink.current?.focus()}
+            />
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
 
 function Resources() {
-  const [filter, setFilter] = useState<"all" | Category>("all");
-  const shown = groups.filter((g) => filter === "all" || g.id === filter);
+  const [viewing, setViewing] = useState<PdfResource | null>(null);
 
   return (
-    <SiteLayout>
-      <PageHero
-        eyebrow="Resources"
-        title={
-          <>
-            Tools from the <span className="grad-text">operator’s desk.</span>
-          </>
-        }
-      >
-        Free checklists and frameworks you can use with your team this week. Each one comes from an
-        episode of Move by Move.
-      </PageHero>
-
-      <section>
-        <div className="wrap">
-          <div className="filters" role="tablist" aria-label="Resource type">
-            {[{ id: "all" as const, plural: "All" }, ...groups].map((g) => {
-              const count =
-                g.id === "all"
-                  ? resources.length
-                  : resources.filter((r) => r.category === g.id).length;
-              return (
-                <button
-                  key={g.id}
-                  role="tab"
-                  aria-selected={filter === g.id}
-                  className={`chip${filter === g.id ? " on" : ""}`}
-                  onClick={() => setFilter(g.id)}
-                >
-                  {g.plural} <span className="count">{count}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {shown.map((g) => {
-            const items = resources.filter((r) => r.category === g.id);
-            return (
-              <div className="res-group" key={g.id}>
-                <div className="res-group-head">
-                  <h2>{g.plural}</h2>
-                  <p className="muted">{g.intro}</p>
-                </div>
-                <div className="res-grid">
-                  {items.map((r) => (
-                    <ResourceCard key={r.pdf} r={r} />
-                  ))}
-                  <ComingSoon plural={g.plural} />
-                </div>
-              </div>
-            );
-          })}
+    <SitePage>
+      <section className="bg-cream">
+        <div className="mx-auto flex max-w-[1200px] flex-col gap-5 px-6 py-16 md:px-8 md:py-20">
+          <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
+            Resources
+          </p>
+          <h1 className="max-w-[900px] text-4xl font-bold leading-[1.1] text-ink md:text-[52px]">
+            Guides, templates and videos from our operators.
+          </h1>
+          <p className="max-w-[760px] text-xl font-light leading-normal">
+            Practical material for leaders working on strategy, revenue, talent and execution.
+          </p>
         </div>
       </section>
 
-      <CtaBand
-        title="Want us to run this with your team?"
-        text="The worksheets show the method. The Diagnostic Council applies it to your business, with all four operators in the room."
-      />
-    </SiteLayout>
+      <section>
+        <div className="mx-auto grid max-w-[1200px] gap-5 px-6 py-16 sm:grid-cols-2 md:px-8 md:py-24 lg:grid-cols-3">
+          {resources.map((r) => (
+            <ResourceCard key={r.title} resource={r} onView={setViewing} />
+          ))}
+        </div>
+      </section>
+
+      <PdfViewer pdf={viewing} onClose={() => setViewing(null)} />
+    </SitePage>
   );
 }
