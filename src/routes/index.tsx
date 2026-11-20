@@ -34,7 +34,8 @@ const reasons = [
 ];
 // DRAFT: written from the client journeys. Edit to match who you actually want to work with.
 const fitYes = [
-  "You run a B2B company, from Series A through PE-backed, and growth has stalled or become hard to predict.",
+  "You’re a B2B company at Series A or beyond, with the budget to fix growth properly, not just diagnose it.",
+  "Growth has stalled or become hard to predict.",
   "Your forecast keeps missing and nobody can say exactly why.",
   "You’re entering a new region across APJ, EMEA or North America.",
   "You’re bringing teams together after a merger or acquisition.",
