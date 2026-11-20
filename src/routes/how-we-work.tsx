@@ -23,7 +23,7 @@ function HowWeWork() {
       <section>
         <div className="wrap">
           <div className="step rv">
-            <div className="num grad-text">1</div>
+            <div className="num">1</div>
             <div>
               <span className="tag">60–90 minutes</span>
               <h3>The Diagnostic Council</h3>
@@ -34,7 +34,7 @@ function HowWeWork() {
             </div>
           </div>
           <div className="step rv">
-            <div className="num grad-text">2</div>
+            <div className="num">2</div>
             <div>
               <h3>The right-sized engagement</h3>
               <div className="price-cards">
@@ -55,7 +55,7 @@ function HowWeWork() {
                 <div className="price feature">
                   <span className="ribbon">MOST IMPACT</span>
                   <span className="tag">Full Council</span>
-                  <div className="amt grad-text">Scoped after discovery</div>
+                  <div className="amt">Scoped after discovery</div>
                   <p>
                     Multiple specialists deploy a full engine redesign. We quote it once the
                     discovery call shows us the size of the problem.

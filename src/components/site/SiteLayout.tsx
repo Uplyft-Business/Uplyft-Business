@@ -10,7 +10,7 @@ const tabs = [
   { to: "/operators", label: "The operators" },
   { to: "/client-journeys", label: "Client journeys" },
   { to: "/resources", label: "Resources" },
-  { to: "/move-by-move", label: "Move by Move", live: true },
+  { to: "/move-by-move", label: "Move by Move" },
 ] as const;
 
 // Browser-tab title per page. index.html holds the home title for first load and link previews.
@@ -79,7 +79,6 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 activeProps={{ className: "active" }}
                 activeOptions={{ exact: true }}
               >
-                {"live" in t && <span className="live-dot" />}
                 {t.label}
               </Link>
             ))}

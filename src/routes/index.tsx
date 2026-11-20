@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ArrowRight } from "@/components/site/icons";
@@ -7,21 +6,13 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const rotatingWords = ["Strategy.", "Revenue.", "Talent.", "Execution."];
+// Facts already stated elsewhere on the site. Swap in harder numbers (revenue managed,
+// teams led) once they can be shared.
 const stats = [
-  { n: 4, suffix: "", l: "Senior operators" },
-  { n: 100, suffix: "+", l: "Years combined experience" },
-  { n: 3, suffix: "", l: "Regions: APJ · EMEA · NA" },
-  { n: 90, suffix: "min", l: "To a clear diagnosis" },
-];
-const marquee = [
-  "Strategy",
-  "Revenue",
-  "Talent",
-  "Execution",
-  "No junior consultants",
-  "Operators, not theorists",
-  "SPARQ Framework™",
+  { n: "25 yrs", l: "In senior roles, each operator" },
+  { n: "100+ yrs", l: "Combined operating experience" },
+  { n: "3 continents", l: "GTM engines built and fixed in APJ, EMEA and North America" },
+  { n: "1 system", l: "Strategy, Revenue, Talent and Execution" },
 ];
 const reasons = [
   [
@@ -53,40 +44,6 @@ const fixes = [
   { t: "Execution", d: "Enablement, storytelling and operating rhythms." },
 ];
 
-function RotatingWord() {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setI((n) => (n + 1) % rotatingWords.length), 2200);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <span className="grad-text rotator">
-      <span key={i}>{rotatingWords[i]}</span>
-    </span>
-  );
-}
-
-function CountUp({ to, suffix }: { to: number; suffix: string }) {
-  const [v, setV] = useState(0);
-  const raf = useRef(0);
-  useEffect(() => {
-    const t0 = performance.now();
-    const tick = (t: number) => {
-      const k = Math.min(1, (t - t0) / 1400);
-      setV(Math.round(to * (1 - Math.pow(1 - k, 3))));
-      if (k < 1) raf.current = requestAnimationFrame(tick);
-    };
-    raf.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf.current);
-  }, [to]);
-  return (
-    <>
-      {v}
-      {suffix}
-    </>
-  );
-}
-
 function Home() {
   return (
     <SiteLayout>
@@ -95,11 +52,9 @@ function Home() {
         <div className="blob b1" />
         <div className="blob b2" />
         <div className="wrap">
-          <Link to="/move-by-move" className="pill">
-            <b>NEW</b> Watch <em>Move by Move</em> on YouTube →
-          </Link>
+          <span className="eyebrow">Senior operators for growth</span>
           <h1>
-            We fix growth problems at the root of your <RotatingWord />
+            We fix growth problems <span className="grad-text">at the root.</span>
           </h1>
           <p className="lede">
             Four senior operators. 100 years of combined experience. One integrated system for
@@ -116,9 +71,7 @@ function Home() {
           <div className="stats">
             {stats.map((s) => (
               <div className="stat" key={s.l}>
-                <div className="n grad-text">
-                  <CountUp to={s.n} suffix={s.suffix} />
-                </div>
+                <div className="n">{s.n}</div>
                 <div className="l">{s.l}</div>
               </div>
             ))}
@@ -126,20 +79,12 @@ function Home() {
         </div>
       </section>
 
-      <div className="marquee" aria-hidden="true">
-        <div className="track">
-          {[...marquee, ...marquee].map((m, i) => (
-            <span key={i}>{m}</span>
-          ))}
-        </div>
-      </div>
-
       <section>
         <div className="wrap split">
           <div className="rv">
             <span className="eyebrow">Why Uplyft</span>
             <p className="big-quote">
-              You don’t need more theory. <span className="grad-text">You need operators.</span>
+              You don’t need more theory. <span className="accent">You need operators.</span>
             </p>
             <p className="muted" style={{ marginTop: 20, fontSize: "1.08rem" }}>
               We’re a collective of four senior executives who have built and fixed go-to-market
@@ -203,7 +148,7 @@ function Home() {
           <div className="sparq rv">
             {fixes.map((f, i) => (
               <div key={f.t}>
-                <div className="k grad-text">0{i + 1}</div>
+                <div className="k">0{i + 1}</div>
                 <h3>{f.t}</h3>
                 <p className="muted">{f.d}</p>
               </div>
