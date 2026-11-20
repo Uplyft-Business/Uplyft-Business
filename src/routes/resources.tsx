@@ -16,11 +16,11 @@ type Resource = {
   blurb: string;
   episode: string; // which Move by Move episode it comes from
   minutes: number;
-  pdf: string; // file name in public/resources/
+  pdf: string; // file name in public/downloads/
   points: string[]; // shown as a numbered list on the card
 };
 
-// To add a resource: put the PDF in public/resources/ and add an entry here.
+// To add a resource: put the PDF in public/downloads/ and add an entry here.
 const resources: Resource[] = [
   {
     category: "framework",
@@ -57,7 +57,7 @@ const groups: { id: Category; label: string; plural: string; intro: string }[] =
 
 function ResourceCard({ r }: { r: Resource }) {
   const group = groups.find((g) => g.id === r.category)!;
-  const href = publicFile(`resources/${r.pdf}`);
+  const href = publicFile(`downloads/${r.pdf}`);
   return (
     <article className="rcard rv">
       <a className="cover" href={href} target="_blank" rel="noopener noreferrer" tabIndex={-1}>
