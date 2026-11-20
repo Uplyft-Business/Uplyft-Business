@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BookRouteImport } from './routes/book'
+import { Route as ClientJourneysRouteImport } from './routes/client-journeys'
+import { Route as HowWeWorkRouteImport } from './routes/how-we-work'
+import { Route as MoveByMoveRouteImport } from './routes/move-by-move'
+import { Route as OperatorsRouteImport } from './routes/operators'
+import { Route as ResourcesRouteImport } from './routes/resources'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientJourneysRoute = ClientJourneysRouteImport.update({
+  id: '/client-journeys',
+  path: '/client-journeys',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowWeWorkRoute = HowWeWorkRouteImport.update({
+  id: '/how-we-work',
+  path: '/how-we-work',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoveByMoveRoute = MoveByMoveRouteImport.update({
+  id: '/move-by-move',
+  path: '/move-by-move',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OperatorsRoute = OperatorsRouteImport.update({
+  id: '/operators',
+  path: '/operators',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
+  '/client-journeys': typeof ClientJourneysRoute
+  '/how-we-work': typeof HowWeWorkRoute
+  '/move-by-move': typeof MoveByMoveRoute
+  '/operators': typeof OperatorsRoute
+  '/resources': typeof ResourcesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
+  '/client-journeys': typeof ClientJourneysRoute
+  '/how-we-work': typeof HowWeWorkRoute
+  '/move-by-move': typeof MoveByMoveRoute
+  '/operators': typeof OperatorsRoute
+  '/resources': typeof ResourcesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
+  '/client-journeys': typeof ClientJourneysRoute
+  '/how-we-work': typeof HowWeWorkRoute
+  '/move-by-move': typeof MoveByMoveRoute
+  '/operators': typeof OperatorsRoute
+  '/resources': typeof ResourcesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/book'
+    | '/client-journeys'
+    | '/how-we-work'
+    | '/move-by-move'
+    | '/operators'
+    | '/resources'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/book'
+    | '/client-journeys'
+    | '/how-we-work'
+    | '/move-by-move'
+    | '/operators'
+    | '/resources'
+  id:
+    | '__root__'
+    | '/'
+    | '/book'
+    | '/client-journeys'
+    | '/how-we-work'
+    | '/move-by-move'
+    | '/operators'
+    | '/resources'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookRoute: typeof BookRoute
+  ClientJourneysRoute: typeof ClientJourneysRoute
+  HowWeWorkRoute: typeof HowWeWorkRoute
+  MoveByMoveRoute: typeof MoveByMoveRoute
+  OperatorsRoute: typeof OperatorsRoute
+  ResourcesRoute: typeof ResourcesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/client-journeys': {
+      id: '/client-journeys'
+      path: '/client-journeys'
+      fullPath: '/client-journeys'
+      preLoaderRoute: typeof ClientJourneysRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-we-work': {
+      id: '/how-we-work'
+      path: '/how-we-work'
+      fullPath: '/how-we-work'
+      preLoaderRoute: typeof HowWeWorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/move-by-move': {
+      id: '/move-by-move'
+      path: '/move-by-move'
+      fullPath: '/move-by-move'
+      preLoaderRoute: typeof MoveByMoveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/operators': {
+      id: '/operators'
+      path: '/operators'
+      fullPath: '/operators'
+      preLoaderRoute: typeof OperatorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookRoute: BookRoute,
+  ClientJourneysRoute: ClientJourneysRoute,
+  HowWeWorkRoute: HowWeWorkRoute,
+  MoveByMoveRoute: MoveByMoveRoute,
+  OperatorsRoute: OperatorsRoute,
+  ResourcesRoute: ResourcesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
