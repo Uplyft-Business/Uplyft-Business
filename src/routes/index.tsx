@@ -32,6 +32,19 @@ const reasons = [
   ["We tell you the truth.", "We diagnose what you need, not what earns us the most."],
   ["We are operators.", "We don’t just design the plan — we help you drive it."],
 ];
+// DRAFT: written from the client journeys. Edit to match who you actually want to work with.
+const fitYes = [
+  "You run a B2B company, from Series A through PE-backed, and growth has stalled or become hard to predict.",
+  "Your forecast keeps missing and nobody can say exactly why.",
+  "You’re entering a new region across APJ, EMEA or North America.",
+  "You’re bringing teams together after a merger or acquisition.",
+  "You’re scaling fast and the engine that got you here won’t get you to the next stage.",
+];
+const fitNo = [
+  "You want a report to file away rather than help putting it into practice.",
+  "You’re pre-revenue and still searching for product–market fit.",
+  "You’re looking for the cheapest pair of hands, not senior judgement.",
+];
 const fixes = [
   { t: "Strategy", d: "Market focus, ideal customer profile and growth priorities." },
   { t: "Revenue", d: "Commercial architecture, forecasting, pricing and deal structure." },
@@ -143,6 +156,36 @@ function Home() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className="fit-section">
+        <div className="wrap">
+          <div className="sec-head rv">
+            <span className="eyebrow">Who it’s for</span>
+            <h2>Is this you?</h2>
+          </div>
+          <div className="fit rv">
+            <div className="fit-yes">
+              <h3>We’re a fit if…</h3>
+              <ul>
+                {fitYes.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="fit-no">
+              <h3>We’re probably not a fit if…</h3>
+              <ul>
+                {fitNo.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+              <Link to="/book" className="btn btn-primary" style={{ marginTop: 28 }}>
+                Sounds like you? Book the Council <ArrowRight />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 

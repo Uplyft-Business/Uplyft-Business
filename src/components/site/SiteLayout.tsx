@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import logo from "@/assets/logo-dark.svg";
-import { YOUTUBE_URL } from "./config";
+import { CONTACT_EMAIL, YOUTUBE_URL } from "./config";
 import { Menu } from "./icons";
 
 const tabs = [
@@ -12,6 +12,19 @@ const tabs = [
   { to: "/resources", label: "Resources" },
   { to: "/move-by-move", label: "Move by Move", live: true },
 ] as const;
+
+// Browser-tab title per page. index.html holds the home title for first load and link previews.
+const SITE_NAME = "Uplyft Business";
+const pageTitles: Record<string, string> = {
+  "/": `${SITE_NAME} — Senior operators for growth`,
+  "/how-we-work": `How we work · ${SITE_NAME}`,
+  "/operators": `The operators · ${SITE_NAME}`,
+  "/client-journeys": `Client journeys · ${SITE_NAME}`,
+  "/resources": `Free checklists & frameworks · ${SITE_NAME}`,
+  "/move-by-move": `Move by Move on YouTube · ${SITE_NAME}`,
+  "/book": `Book the Diagnostic Council · ${SITE_NAME}`,
+  "/privacy": `Privacy policy · ${SITE_NAME}`,
+};
 
 // Fades in every .rv element as it scrolls into view. Re-runs on each page change.
 function useScrollReveal(pathname: string) {
@@ -44,6 +57,11 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   useScrollReveal(pathname);
   useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    // Trailing slashes and a GitHub Pages base path shouldn't change the lookup.
+    const key = Object.keys(pageTitles).find((p) => p !== "/" && pathname.endsWith(p)) ?? "/";
+    document.title = pageTitles[key] ?? SITE_NAME;
+  }, [pathname]);
 
   return (
     <div className="site">
@@ -109,10 +127,13 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 Move by Move on YouTube
               </a>
               <Link to="/book">Book the Council</Link>
+              <a href={`mailto:${CONTACT_EMAIL}`}>Email us</a>
             </div>
           </div>
           <div className="copy">
-            <span>© 2026 Uplyft Business</span>
+            <span>
+              © 2026 Uplyft Business · <Link to="/privacy">Privacy policy</Link>
+            </span>
             <span>Powered by the Uplyft SPARQ Framework™</span>
           </div>
         </div>

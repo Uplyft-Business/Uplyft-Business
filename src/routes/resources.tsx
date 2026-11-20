@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHero, SiteLayout } from "@/components/site/SiteLayout";
+import { CtaBand, PageHero, SiteLayout } from "@/components/site/SiteLayout";
 import { publicFile, YOUTUBE_URL } from "@/components/site/config";
 import { ArrowRight, Download } from "@/components/site/icons";
 
@@ -180,6 +180,11 @@ function Resources() {
           })}
         </div>
       </section>
+
+      <CtaBand
+        title="Want us to run this with your team?"
+        text="The worksheets show the method. The Diagnostic Council applies it to your business, with all four operators in the room."
+      />
     </SiteLayout>
   );
 }

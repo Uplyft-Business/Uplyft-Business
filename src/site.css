@@ -605,6 +605,97 @@
     var(--grad);
 }
 
+/* ---------- legal pages ---------- */
+.site .legal {
+  max-width: 760px;
+}
+.site .legal h2 {
+  font-size: 1.5rem;
+  margin: 40px 0 12px;
+}
+.site .legal p,
+.site .legal li {
+  font-size: 1.05rem;
+  color: var(--muted-c);
+}
+.site .legal b {
+  color: var(--text);
+}
+.site .legal ul {
+  display: grid;
+  gap: 10px;
+  padding-left: 20px;
+  list-style: disc;
+}
+.site .legal p + p {
+  margin-top: 12px;
+}
+.site .legal a {
+  color: var(--o1);
+  font-weight: 700;
+}
+
+/* ---------- who it's for ---------- */
+.site .fit-section {
+  padding-top: 0;
+}
+.site .fit {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 22px;
+}
+@media (max-width: 860px) {
+  .site .fit {
+    grid-template-columns: 1fr;
+  }
+}
+.site .fit > div {
+  border-radius: var(--r);
+  padding: 34px;
+}
+.site .fit h3 {
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+}
+.site .fit ul {
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+.site .fit li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.site .fit li::before {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.site .fit-yes {
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.site .fit-yes li::before {
+  content: "✓";
+  background: var(--grad);
+  color: #fff;
+}
+.site .fit-no {
+  background: var(--cream-2);
+}
+.site .fit-no li::before {
+  content: "✕";
+  background: #d9cfc2;
+  color: var(--muted-c);
+}
+
 /* ---------- SPARQ ---------- */
 .site .sparq {
   display: grid;

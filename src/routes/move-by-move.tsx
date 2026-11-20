@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { SiteLayout } from "@/components/site/SiteLayout";
+import { CtaBand, SiteLayout } from "@/components/site/SiteLayout";
 import { YOUTUBE_URL } from "@/components/site/config";
 import { Play, YouTubeLogo } from "@/components/site/icons";
 
@@ -81,6 +81,11 @@ function MoveByMove() {
           </div>
         </div>
       </section>
+
+      <CtaBand
+        title="Want the next move made for you?"
+        text="Bring your own growth problem to the Diagnostic Council and get a straight answer in 90 minutes."
+      />
     </SiteLayout>
   );
 }

@@ -22,6 +22,7 @@ describe("App routing", () => {
     "/resources",
     "/move-by-move",
     "/book",
+    "/privacy",
   ])("matches a page for the %s tab", (path) => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
 

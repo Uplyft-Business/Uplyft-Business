@@ -15,6 +15,7 @@ import { Route as ClientJourneysRouteImport } from './routes/client-journeys'
 import { Route as HowWeWorkRouteImport } from './routes/how-we-work'
 import { Route as MoveByMoveRouteImport } from './routes/move-by-move'
 import { Route as OperatorsRouteImport } from './routes/operators'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResourcesRouteImport } from './routes/resources'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const OperatorsRoute = OperatorsRouteImport.update({
   path: '/operators',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/how-we-work': typeof HowWeWorkRoute
   '/move-by-move': typeof MoveByMoveRoute
   '/operators': typeof OperatorsRoute
+  '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/how-we-work': typeof HowWeWorkRoute
   '/move-by-move': typeof MoveByMoveRoute
   '/operators': typeof OperatorsRoute
+  '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/how-we-work': typeof HowWeWorkRoute
   '/move-by-move': typeof MoveByMoveRoute
   '/operators': typeof OperatorsRoute
+  '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/how-we-work'
     | '/move-by-move'
     | '/operators'
+    | '/privacy'
     | '/resources'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/how-we-work'
     | '/move-by-move'
     | '/operators'
+    | '/privacy'
     | '/resources'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/how-we-work'
     | '/move-by-move'
     | '/operators'
+    | '/privacy'
     | '/resources'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   HowWeWorkRoute: typeof HowWeWorkRoute
   MoveByMoveRoute: typeof MoveByMoveRoute
   OperatorsRoute: typeof OperatorsRoute
+  PrivacyRoute: typeof PrivacyRoute
   ResourcesRoute: typeof ResourcesRoute
 }
 
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OperatorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resources': {
       id: '/resources'
       path: '/resources'
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   HowWeWorkRoute: HowWeWorkRoute,
   MoveByMoveRoute: MoveByMoveRoute,
   OperatorsRoute: OperatorsRoute,
+  PrivacyRoute: PrivacyRoute,
   ResourcesRoute: ResourcesRoute,
 }
 export const routeTree = rootRouteImport
