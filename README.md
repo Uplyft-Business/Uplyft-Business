@@ -25,8 +25,8 @@ All four of us meet with you. We don't pitch; we diagnose. We find what's actual
 
 | Engagement | How it works | Best for | Investment | Timeline |
 | --- | --- | --- | --- | --- |
-| **Targeted Sprint** (Specialist Lead) | One lead drives the work. The other three review strategy at key milestones to catch blind spots. | Specific, contained problems | $50K–$120K | 30–90 days |
-| **Full Council** | Multiple specialists carry out a full engine redesign. | Stalled growth or post-merger integration | $150K–$350K | 90–180 days |
+| **Project** (Specialist Lead) | One lead drives the work. The other three review strategy at key milestones to catch blind spots. | Specific, contained problems | From USD 9K, fixed fee | 30–90 days |
+| **Transformation** | Several operators work across the whole engine, with coaching for the leaders carrying the change. | Stalled growth, a full engine redesign or post-merger integration | Fixed fee, agreed after the Diagnostic Council | 3–6 months |
 
 ## What we fix
 

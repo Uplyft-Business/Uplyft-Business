@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import { ChevronDown, ExternalLink, Menu, X } from "lucide-react";
 import logo from "@/assets/logo.svg";
@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 export const DIAGNOSTIC_FORM_ID = "yXXWpW";
 const COACHING_URL = "https://uplifyt.com/individual/home";
-const CONTACT_URL = "https://uplifyt.com/business/contact-us";
+export const CONTACT_URL = "https://uplifyt.com/business/contact-us";
 
 // Sections of the home page. Links go through the router so they work from any page.
 const sectionLinks = [
@@ -161,6 +161,9 @@ function SiteFooter() {
           <Link to="/resources" className={footerLink}>
             Resources
           </Link>
+          <Link to="/privacy" className={footerLink}>
+            Privacy
+          </Link>
           <a href={COACHING_URL} className={footerLink}>
             Personal coaching
           </a>
@@ -173,8 +176,15 @@ function SiteFooter() {
   );
 }
 
-// Header and footer shared by every page.
-export function SitePage({ children }: { children: React.ReactNode }) {
+const HOME_TITLE = "Uplyft.Business — We fix growth problems at the root";
+
+// Header and footer shared by every page. `title` sets the browser tab; the home title also
+// lives in index.html for first load and link previews.
+export function SitePage({ children, title }: { children: React.ReactNode; title?: string }) {
+  useEffect(() => {
+    document.title = title ? `${title} — Uplyft.Business` : HOME_TITLE;
+  }, [title]);
+
   return (
     <div className="bg-white font-sans text-body">
       <SiteHeader />

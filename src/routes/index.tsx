@@ -87,6 +87,10 @@ const stories = [
 ];
 const faqs = [
   {
+    q: "Who is this for?",
+    a: "B2B tech companies from Series A onwards that are ready to put real budget behind fixing growth, not just talking about it. If you’re still looking for product–market fit, or you want a report to file away, we’re probably not the right people.",
+  },
+  {
     q: "Is the Diagnostic Council really free?",
     a: "Yes. It’s 60 to 90 minutes with all four operators, after a 10-minute questionnaire. If we can’t help, we’ll say so.",
   },
@@ -267,7 +271,7 @@ function Index() {
               <li>Leader coaching available as an add-on</li>
             </ul>
             <p className="mt-2 text-[28px] font-bold text-ink">
-              From USD 50K{" "}
+              From USD 9K{" "}
               <span className="text-base font-normal text-muted-foreground">fixed fee</span>
             </p>
           </div>

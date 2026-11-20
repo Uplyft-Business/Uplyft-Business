@@ -22,4 +22,12 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).toBe("/resources");
   });
+
+  it("matches the privacy page", () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    const matches = router.matchRoutes("/privacy");
+
+    expect(matches.at(-1)?.routeId).toBe("/privacy");
+  });
 });
