@@ -10,12 +10,49 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ClientStoriesRouteImport } from './routes/client-stories'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as HowWeWorkRouteImport } from './routes/how-we-work'
+import { Route as MoveByMoveRouteImport } from './routes/move-by-move'
+import { Route as OperatorsRouteImport } from './routes/operators'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as WhatWeFixRouteImport } from './routes/what-we-fix'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientStoriesRoute = ClientStoriesRouteImport.update({
+  id: '/client-stories',
+  path: '/client-stories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowWeWorkRoute = HowWeWorkRouteImport.update({
+  id: '/how-we-work',
+  path: '/how-we-work',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoveByMoveRoute = MoveByMoveRouteImport.update({
+  id: '/move-by-move',
+  path: '/move-by-move',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OperatorsRoute = OperatorsRouteImport.update({
+  id: '/operators',
+  path: '/operators',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -28,35 +65,99 @@ const ResourcesRoute = ResourcesRouteImport.update({
   path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WhatWeFixRoute = WhatWeFixRouteImport.update({
+  id: '/what-we-fix',
+  path: '/what-we-fix',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/client-stories': typeof ClientStoriesRoute
+  '/faq': typeof FaqRoute
+  '/how-we-work': typeof HowWeWorkRoute
+  '/move-by-move': typeof MoveByMoveRoute
+  '/operators': typeof OperatorsRoute
+  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
+  '/what-we-fix': typeof WhatWeFixRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/client-stories': typeof ClientStoriesRoute
+  '/faq': typeof FaqRoute
+  '/how-we-work': typeof HowWeWorkRoute
+  '/move-by-move': typeof MoveByMoveRoute
+  '/operators': typeof OperatorsRoute
+  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
+  '/what-we-fix': typeof WhatWeFixRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/client-stories': typeof ClientStoriesRoute
+  '/faq': typeof FaqRoute
+  '/how-we-work': typeof HowWeWorkRoute
+  '/move-by-move': typeof MoveByMoveRoute
+  '/operators': typeof OperatorsRoute
+  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
+  '/what-we-fix': typeof WhatWeFixRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy' | '/resources'
+  fullPaths:
+    | '/'
+    | '/client-stories'
+    | '/faq'
+    | '/how-we-work'
+    | '/move-by-move'
+    | '/operators'
+    | '/pricing'
+    | '/privacy'
+    | '/resources'
+    | '/what-we-fix'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy' | '/resources'
-  id: '__root__' | '/' | '/privacy' | '/resources'
+  to:
+    | '/'
+    | '/client-stories'
+    | '/faq'
+    | '/how-we-work'
+    | '/move-by-move'
+    | '/operators'
+    | '/pricing'
+    | '/privacy'
+    | '/resources'
+    | '/what-we-fix'
+  id:
+    | '__root__'
+    | '/'
+    | '/client-stories'
+    | '/faq'
+    | '/how-we-work'
+    | '/move-by-move'
+    | '/operators'
+    | '/pricing'
+    | '/privacy'
+    | '/resources'
+    | '/what-we-fix'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClientStoriesRoute: typeof ClientStoriesRoute
+  FaqRoute: typeof FaqRoute
+  HowWeWorkRoute: typeof HowWeWorkRoute
+  MoveByMoveRoute: typeof MoveByMoveRoute
+  OperatorsRoute: typeof OperatorsRoute
+  PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   ResourcesRoute: typeof ResourcesRoute
+  WhatWeFixRoute: typeof WhatWeFixRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +167,48 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/client-stories': {
+      id: '/client-stories'
+      path: '/client-stories'
+      fullPath: '/client-stories'
+      preLoaderRoute: typeof ClientStoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-we-work': {
+      id: '/how-we-work'
+      path: '/how-we-work'
+      fullPath: '/how-we-work'
+      preLoaderRoute: typeof HowWeWorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/move-by-move': {
+      id: '/move-by-move'
+      path: '/move-by-move'
+      fullPath: '/move-by-move'
+      preLoaderRoute: typeof MoveByMoveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/operators': {
+      id: '/operators'
+      path: '/operators'
+      fullPath: '/operators'
+      preLoaderRoute: typeof OperatorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -82,13 +225,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/what-we-fix': {
+      id: '/what-we-fix'
+      path: '/what-we-fix'
+      fullPath: '/what-we-fix'
+      preLoaderRoute: typeof WhatWeFixRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClientStoriesRoute: ClientStoriesRoute,
+  FaqRoute: FaqRoute,
+  HowWeWorkRoute: HowWeWorkRoute,
+  MoveByMoveRoute: MoveByMoveRoute,
+  OperatorsRoute: OperatorsRoute,
+  PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   ResourcesRoute: ResourcesRoute,
+  WhatWeFixRoute: WhatWeFixRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

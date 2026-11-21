@@ -17,16 +17,19 @@ export const DIAGNOSTIC_FORM_ID = "yXXWpW";
 const COACHING_URL = "https://uplifyt.com/individual/home";
 export const CONTACT_URL = "https://uplifyt.com/business/contact-us";
 
-// Sections of the home page. Links go through the router so they work from any page.
-const sectionLinks = [
-  { hash: "fix", label: "What we fix" },
-  { hash: "how", label: "How we work" },
-  { hash: "pricing", label: "Pricing" },
-  { hash: "operators", label: "Operators" },
-  { hash: "faq", label: "FAQ" },
-];
+// Each menu item has its own page. The home page still shows every section in one scroll.
+const pageLinks = [
+  { to: "/what-we-fix", label: "What we fix" },
+  { to: "/how-we-work", label: "How we work" },
+  { to: "/pricing", label: "Pricing" },
+  { to: "/operators", label: "Operators" },
+  { to: "/faq", label: "FAQ" },
+] as const;
 
 const linkClass = "text-ink no-underline transition hover:text-brand";
+// The current page's menu item. Set as a style because a second text-colour class would lose
+// to text-ink in linkClass.
+const activeLink = { style: { color: "var(--brand)" }, "aria-current": "page" as const };
 const coachingClass = "text-muted-foreground no-underline transition hover:text-brand";
 const menuItemClass = "cursor-pointer px-3 py-2 text-[15px] font-medium text-ink focus:text-brand";
 
@@ -45,7 +48,8 @@ export function DiagnosticButton({ className }: { className?: string }) {
 }
 
 function ResourcesMenu() {
-  const onResources = useMatchRoute()({ to: "/resources" });
+  const matchRoute = useMatchRoute();
+  const onResources = matchRoute({ to: "/resources" }) || matchRoute({ to: "/move-by-move" });
 
   return (
     <DropdownMenu modal={false}>
@@ -61,6 +65,9 @@ function ResourcesMenu() {
       <DropdownMenuContent align="start" className="min-w-52 rounded-lg p-1.5">
         <DropdownMenuItem asChild className={menuItemClass}>
           <Link to="/resources">All resources</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild className={menuItemClass}>
+          <Link to="/move-by-move">Move by Move</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className={menuItemClass}>
           <a href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
@@ -86,8 +93,8 @@ function SiteHeader() {
           aria-label="Main"
           className="hidden items-center gap-5 whitespace-nowrap font-medium xl:flex"
         >
-          {sectionLinks.map((l) => (
-            <Link key={l.hash} to="/" hash={l.hash} className={linkClass}>
+          {pageLinks.map((l) => (
+            <Link key={l.to} to={l.to} className={linkClass} activeProps={activeLink}>
               {l.label}
             </Link>
           ))}
@@ -114,12 +121,12 @@ function SiteHeader() {
           aria-label="Main"
           className="flex flex-col gap-1 border-t border-border px-6 pb-6 pt-2 font-medium xl:hidden"
         >
-          {sectionLinks.map((l) => (
+          {pageLinks.map((l) => (
             <Link
-              key={l.hash}
-              to="/"
-              hash={l.hash}
+              key={l.to}
+              to={l.to}
               className={cn(linkClass, "py-2")}
+              activeProps={activeLink}
               onClick={close}
             >
               {l.label}
@@ -128,6 +135,9 @@ function SiteHeader() {
           <p className="py-2 text-ink">Resources</p>
           <Link to="/resources" className={cn(linkClass, "py-2 pl-4")} onClick={close}>
             All resources
+          </Link>
+          <Link to="/move-by-move" className={cn(linkClass, "py-2 pl-4")} onClick={close}>
+            Move by Move
           </Link>
           <a
             href={YOUTUBE_URL}
@@ -158,8 +168,14 @@ function SiteFooter() {
           Uplyft.Business is the business practice of Uplifyt. © 2026
         </p>
         <nav aria-label="Footer" className="flex flex-wrap gap-5 text-[15px]">
+          <Link to="/client-stories" className={footerLink}>
+            Client stories
+          </Link>
           <Link to="/resources" className={footerLink}>
             Resources
+          </Link>
+          <Link to="/move-by-move" className={footerLink}>
+            Move by Move
           </Link>
           <Link to="/privacy" className={footerLink}>
             Privacy
